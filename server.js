@@ -11,7 +11,7 @@ app.get('/html', function(req, res){
 app.get('/scrape', function(req, res){
 
 //url = 'http://localhost:8081/html/';
-url = 'https://pt.wikipedia.org/wiki/Lítio';
+url = 'https://pt.wikipedia.org/wiki/Carbono';
 request(url, function(error, response, html){
     if(!error){
         
@@ -23,10 +23,23 @@ request(url, function(error, response, html){
         var $ = cheerio.load(html);
         var liberar_concact;
         var titulo;
+
+
+
+
         $('.infobox_v2 tbody tr td').each((i, element) => {
             const cheerioElement = $(element);
             const avatar = cheerioElement.text();
-            console.log(avatar);
+            
+            var src = cheerioElement.find('.image').children('img').eq(0).attr('src');
+            //var src = $('img').attr("src");
+            if(src){
+                console.log(src);
+                src = 'https:'+src;
+                json['img'] = {src :src};
+            }
+           
+         
             //avatar = avatar.replace(/^\s+|\s+$/g,"");
    
            
@@ -80,7 +93,7 @@ request(url, function(error, response, html){
         
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(json));
-        console.log(json);
+        
 }
 
 
