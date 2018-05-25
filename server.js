@@ -4,18 +4,28 @@ var request = require('request');
 var cheerio = require('cheerio');
 var app     = express();
 
+
+
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Pass to next layer of middleware
+    next();
+});
+
+
+
 app.get('/html', function(req, res){
     res.sendFile('html/tabela.html', {root: __dirname });
 })
 
-app.get('/scrape', function(req, res){
-
+app.get('/scrape/:elemento', function(req, res){
+var elemento = req.params.elemento;
 //url = 'http://localhost:8081/html/';
-url = 'https://pt.wikipedia.org/wiki/Carbono';
+url = 'https://pt.wikipedia.org/wiki/'+elemento;
 request(url, function(error, response, html){
     if(!error){
-        
-
         var title, release, rating;
         var json = { };
         var array = [];
@@ -23,10 +33,6 @@ request(url, function(error, response, html){
         var $ = cheerio.load(html);
         var liberar_concact;
         var titulo;
-
-
-
-
         $('.infobox_v2 tbody tr td').each((i, element) => {
             const cheerioElement = $(element);
             const avatar = cheerioElement.text();
@@ -38,11 +44,6 @@ request(url, function(error, response, html){
                 src = 'https:'+src;
                 json['img'] = {src :src};
             }
-           
-         
-            //avatar = avatar.replace(/^\s+|\s+$/g,"");
-   
-           
             if(   
                   (avatar == "Nome, símbolo, número")||             
                   (avatar == "Série química")|| 
@@ -93,9 +94,7 @@ request(url, function(error, response, html){
         
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(json));
-        
 }
-
 
 //res.send('Check your console!')
 
