@@ -34,21 +34,21 @@ request(url, function(error, response, html){
         var liberar_concact;
         var titulo;
         var src = '';
-        json['img'] = '';
+        src = 'http://www.buritama.sp.leg.br/imagens/parlamentares-2013-2016/sem-foto.jpg/image'; 
+        json['img'] = {src :src};
         $('.infobox_v2 tbody tr td').each((i, element) => {
             const cheerioElement = $(element);
             const avatar = cheerioElement.text();
             
             src = cheerioElement.find('.image').children('img').eq(0).attr('src');
             //var src = $('img').attr("src");
-            if((src)&&(src.includes(".jpg"))){
+            if((src)&&(  (src.includes(".jpg"))|| (src.includes(".JPG"))  )){
                 console.log(src);
                 src = 'https:'+src;
                 json['img'] = {src :src};
-            }else{
-              src = 'http://www.buritama.sp.leg.br/imagens/parlamentares-2013-2016/sem-foto.jpg/image'; 
-              json['img'] = {src :src};
             }
+              
+           
             if(   
                   (avatar == "Nome, símbolo, número")||             
                   (avatar == "Série química")|| 
