@@ -48,7 +48,6 @@ request(url, function(error, response, html){
                 json['img'] = {src :src};
             }
               
-           
             if(   
                   (avatar == "Nome, símbolo, número")||             
                   (avatar == "Série química")|| 
@@ -99,6 +98,7 @@ request(url, function(error, response, html){
         
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(json));
+
 }
 
 //res.send('Check your console!')
