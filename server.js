@@ -33,16 +33,21 @@ request(url, function(error, response, html){
         var $ = cheerio.load(html);
         var liberar_concact;
         var titulo;
+        var src = '';
+        json['img'] = '';
         $('.infobox_v2 tbody tr td').each((i, element) => {
             const cheerioElement = $(element);
             const avatar = cheerioElement.text();
             
-            var src = cheerioElement.find('.image').children('img').eq(0).attr('src');
+            src = cheerioElement.find('.image').children('img').eq(0).attr('src');
             //var src = $('img').attr("src");
-            if(src){
+            if((src)&&(src.includes(".jpg"))){
                 console.log(src);
                 src = 'https:'+src;
                 json['img'] = {src :src};
+            }else{
+              src = 'http://www.buritama.sp.leg.br/imagens/parlamentares-2013-2016/sem-foto.jpg/image'; 
+              json['img'] = {src :src};
             }
             if(   
                   (avatar == "Nome, símbolo, número")||             
