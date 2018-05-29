@@ -111,9 +111,7 @@ request(url, function(error, response, html){
 
 
 
-http.listen(process.env.PORT || 3000, function(){
-  console.log('listening on', http.address().port);
-});
-
+var porta = process.env.PORT || 8080;
+app.listen(porta);
 
 exports = module.exports = app;
