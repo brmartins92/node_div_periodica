@@ -111,9 +111,9 @@ request(url, function(error, response, html){
 
 
 
-var app = express()
-  .use(express.static(__dirname + '/'))
-  .listen(process.env.PORT || 5000);
+http.listen(process.env.PORT || 3000, function(){
+  console.log('listening on', http.address().port);
+});
 
 
 exports = module.exports = app;
