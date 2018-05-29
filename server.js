@@ -107,13 +107,13 @@ request(url, function(error, response, html){
 }) //do inicio 
 
 
-app.listen('8081')
+//app.listen('8081')
 
 
-/*
+
 var app = express()
   .use(express.static(__dirname + '/'))
   .listen(process.env.PORT || 5000);
-*/
+
 
 exports = module.exports = app;
