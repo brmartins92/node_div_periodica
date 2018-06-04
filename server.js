@@ -35,7 +35,8 @@ request(url, function(error, response, html){
         var titulo;
         var src = '';
         src = 'http://www.buritama.sp.leg.br/imagens/parlamentares-2013-2016/sem-foto.jpg/image'; 
-        json['img'] = {src :src};
+        json['img'] = {src :src };
+        json['foundInfo'] = {check : false };
         $('.infobox_v2 tbody tr td').each((i, element) => {
             const cheerioElement = $(element);
             const avatar = cheerioElement.text();
@@ -85,6 +86,7 @@ request(url, function(error, response, html){
             }else{
                 if(liberar_concact == 1){
                     if(avatar){
+                        json['foundInfo'] = {check : true };
                         i = i +1;
                         json[i] = {titulo :titulo, dado:avatar};
                         
@@ -124,11 +126,11 @@ request(url, function(error, response, html){
         $('#mw-content-text p').each((i, element) => {
             const cheerioElement = $(element);
             const avatar = cheerioElement.text();
-            
             console.log(avatar);
-
-            //src = cheerioElement.find('.image').children('img').eq(0).attr('src');
-            //var src = $('img').attr("src");
+            if(avatar){
+              i = i +1;
+              json[i] = { text:avatar};
+            }
             
         });
         
